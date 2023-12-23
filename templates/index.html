@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="https://w.forfun.com/fetch/cf/cf101e3ecd8a8cc475f58f853b6012b0.jpeg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Анализ Болей и Потребностей🔥</title>
+    <style>
+        
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #chat-box {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 900px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        #user-input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #send-button {
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-top: 20px;
+        }
+
+        #send-button:hover {
+            background-color: #2e2e2e;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Анализ Болей и Потребностей🔥</h1>
+    <div id="chat-box">
+        <p><b>Ассистент:</b> Привет! Я AI-ассистент для анализа Болей и Потребностей📈</p>
+    </div>
+    <input type="text" id="user-input" placeholder="Введите ваше сообщение...">
+    <button id="send-button", style ="color:whitesmoke;">Отправить</button>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        let responsePending = false; 
+
+        sendButton.addEventListener('click', () => {
+            const userMessage = userInput.value;
+
+            if (!userMessage) {
+                alert('Please enter a message');
+                return;
+            }
+
+            sendButton.disabled = true;
+
+            appendMessage(`Вы: ${userMessage}`);
+            userInput.value = '';
+
+            fetch('/message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botMessage = `Ассистент: ${data.message}`;
+                appendMessage(botMessage);
+                sendButton.disabled = false;
+            });
+        });
+
+        function appendMessage(message) {
+            const messageElement = document.createElement('p');
+            messageElement.innerHTML = message.replace(/\n/g, '<br>').replace('Ассистент:', '<br><b>Ассистент:</b>').replace('Вы:', '<br><b>Вы:</b>');
+            chatBox.appendChild(messageElement);
+        }
+
+    
+
+    </script>
+</body>
+</html>
